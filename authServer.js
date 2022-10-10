@@ -31,6 +31,8 @@ if (user == null) res.status(404).send ("User does not exist!")
 if (await bcrypt.compare(req.body.password, user.password)) {
 const accessToken = generateAccessToken ({user: req.body.name})
 const refreshToken = generateRefreshToken ({user: req.body.name})
+console.log("Access Token: " + accessToken)
+console.log("Refresh Token: " + refreshToken)
 res.json ({accessToken: accessToken, refreshToken: refreshToken})
 } 
 else {
@@ -40,8 +42,7 @@ res.status(401).send("Password Incorrect!")
 
 // accessTokens
 function generateAccessToken(user) {
-    return 
-    jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"}) 
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"}) 
 }
     // refreshTokens
 let refreshTokens = []
